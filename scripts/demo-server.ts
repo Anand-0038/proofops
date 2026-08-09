@@ -10,6 +10,7 @@ import { ApprovalQueue } from "../src/agent/ApprovalQueue.js";
 import { env } from "../src/config/env.js";
 import { createProofOpsServer } from "../src/demo/server.js";
 import { EvidenceStore } from "../src/evidence/EvidenceRecord.js";
+import { createCachedKeeperHubStatus } from "../src/keeperhub/status.js";
 
 const tokenPath =
   process.env.PROOFOPS_OPERATOR_TOKEN_FILE ??
@@ -43,6 +44,11 @@ const server = createProofOpsServer({
   approvalQueue: new ApprovalQueue(env.APPROVAL_QUEUE_PATH),
   staticDir: join(process.cwd(), "app/dashboard"),
   proofDir: join(process.cwd(), "data/proof-bundle"),
+  publicEvidenceDir: join(process.cwd(), "docs/evidence"),
+  keeperHubStatusFn: createCachedKeeperHubStatus({
+    url: env.KEEPERHUB_MCP_URL,
+    apiKey: env.KEEPERHUB_API_KEY,
+  }),
 });
 
 server.listen(port, "0.0.0.0", () => {

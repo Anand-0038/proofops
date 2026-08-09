@@ -278,6 +278,23 @@ const server = createProofOpsServer({
   runCycleFn: fixtureCycle,
   staticDir,
   proofDir,
+  publicEvidenceFn: () => ({
+    verified: true,
+    ledger: { schemaVersion: "proofops.public-receipts.v1", receipts: [] },
+    anchor: null,
+  }),
+  keeperHubStatusFn: async () => ({
+    configured: false,
+    reachable: false,
+    transport: "mcp_streamable_http",
+    serverName: null,
+    serverVersion: null,
+    protocolVersion: null,
+    toolCount: 0,
+    requiredTools: { searchWorkflows: false, callWorkflow: false },
+    checkedAt: FIXTURE_TIME,
+    stale: false,
+  }),
 });
 
 server.listen(port, "127.0.0.1");

@@ -1,7 +1,7 @@
 # Reliability Report
 
-Window: 2026-07-30T02:53:52.527Z → 2026-08-09T09:09:10.949Z
-Total runs (denominator): **144**
+Window: 2026-07-30T02:53:52.527Z → 2026-08-09T12:28:48.417Z
+Total runs (denominator): **149**
 
 ## Outcomes
 
@@ -9,17 +9,17 @@ Total runs (denominator): **144**
 | --- | ---: |
 | Confirmed | 2 |
 | Verified live KeeperHub executions | 2 |
-| Fixture recovery demonstrations | 46 |
+| Fixture recovery demonstrations | 48 |
 | Failed | 0 |
-| Policy blocked | 50 |
+| Policy blocked | 52 |
 | Simulation blocked | 3 |
 | Approval required | 1 |
 
 ## Rates (explicit denominators)
 
-- Success rate: 1.4% (2/144) — confirmed / all runs
-- First-attempt success: 4.2% (0/2) — confirmed-on-attempt-1 / attempted
-- Recovery rate: 100.0% (46 recovered / multi-attempt runs)
+- Success rate: 1.3% (2/149) — confirmed / all runs
+- First-attempt success: 4.0% (0/2) — confirmed-on-attempt-1 / attempted
+- Recovery rate: 100.0% (48 recovered / multi-attempt runs)
 - Simulation catch rate: 60.0% (simulation_blocked / (sim_blocked+confirmed+failed))
 
 ## Latency & gas
@@ -48,6 +48,6 @@ Total runs (denominator): **144**
 
 Target confirmed executions: 50
 Actual confirmed in store: 2
-Fixture recovery demonstrations: 46
+Fixture recovery demonstrations: 48
 Quarantined evidence rows: 8
 NOTE: fixture mode used synthetic recovery rows for non-live modes. Replace with explicit --live KeeperHub runs before submission.

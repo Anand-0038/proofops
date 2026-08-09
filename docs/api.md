@@ -34,6 +34,8 @@ same-origin console or `PROOFOPS_ALLOWED_ORIGIN`.
 | `GET` | `/api/metrics` | explicit-denominator aggregates |
 | `GET` | `/api/approvals` | pending, unexpired exact-action approvals |
 | `GET` | `/api/proof/:file` | allowlisted exported proof artifact |
+| `GET` | `/api/public-evidence` | integrity-checked live receipt ledger and ActionLog anchor |
+| `GET` | `/api/integrations/keeperhub` | sanitized, cached KeeperHub MCP connection status |
 
 `/api/health` reports `verifiedLiveEvidenceRecords`, but it never promotes a
 receipt into a submission-ready claim. Public repository, demo, and video URLs
@@ -41,6 +43,13 @@ are checked only by `corepack pnpm run release:gate`.
 
 Allowlisted proof filenames are `manifest.json`, `proof-bundle.json`,
 `proof-bundle.md`, `report.html`, and `verification.json`.
+
+The KeeperHub integration route performs server-side MCP initialization and
+tool discovery. It returns only connection state, protocol/server versions,
+tool count, and the presence of `search_workflows` and `call_workflow`; it never
+returns the API key, MCP session ID, workflow payloads, or tool results. The
+public-evidence route fails closed unless both checked-in artifacts pass schema,
+digest, URL-binding, and anchor-integrity verification.
 
 ## Mutation routes
 

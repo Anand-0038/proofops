@@ -14,6 +14,11 @@ import {
 } from "../evidence/EvidenceRecord.js";
 import { aggregateEvidence } from "../evidence/aggregate.js";
 import {
+  verifyActionLogAnchor,
+  verifyPublicReceiptLedger,
+} from "../evidence/publicReceipts.js";
+import type { KeeperHubPublicStatus } from "../keeperhub/status.js";
+import {
   assertMutationAuthorized,
   DemoHttpError,
   readJsonBody,
@@ -36,6 +41,9 @@ interface ProofOpsServerOptions {
   runCycleFn?: typeof runCycle;
   staticDir: string;
   proofDir: string;
+  publicEvidenceDir?: string;
+  publicEvidenceFn?: () => unknown;
+  keeperHubStatusFn?: () => Promise<KeeperHubPublicStatus>;
   maxBodyBytes?: number;
 }
 
@@ -189,6 +197,71 @@ export function createProofOpsServer(options: ProofOpsServerOptions): Server {
             validEvidenceRecords: read.records.length,
             quarantinedEvidenceRows: read.issues.length,
           },
+          correlationId,
+        );
+        return;
+      }
+      if (path === "/api/integrations/keeperhub" && request.method === "GET") {
+        const status = options.keeperHubStatusFn
+          ? await options.keeperHubStatusFn()
+          : {
+              configured: false,
+              reachable: false,
+              transport: "mcp_streamable_http" as const,
+              serverName: null,
+              serverVersion: null,
+              protocolVersion: null,
+              toolCount: 0,
+              requiredTools: { searchWorkflows: false, callWorkflow: false },
+              checkedAt: new Date().toISOString(),
+              stale: false,
+            };
+        sendJson(response, 200, status, correlationId);
+        return;
+      }
+      if (path === "/api/public-evidence" && request.method === "GET") {
+        if (options.publicEvidenceFn) {
+          sendJson(response, 200, options.publicEvidenceFn(), correlationId);
+          return;
+        }
+        if (!options.publicEvidenceDir) {
+          throw new DemoHttpError(
+            404,
+            "public_evidence_unavailable",
+            "No public evidence directory is configured",
+            "Use the checked-in receipt ledger for a public deployment.",
+          );
+        }
+        const ledgerPath = join(
+          options.publicEvidenceDir,
+          "verified-live-receipts.json",
+        );
+        const anchorPath = join(options.publicEvidenceDir, "action-log-anchor.json");
+        if (!existsSync(ledgerPath) || !existsSync(anchorPath)) {
+          throw new DemoHttpError(
+            503,
+            "public_evidence_incomplete",
+            "The public evidence ledger or ActionLog anchor is missing",
+            "Publish and verify both evidence artifacts before deployment.",
+          );
+        }
+        const ledgerBytes = readFileSync(ledgerPath);
+        const ledger = JSON.parse(ledgerBytes.toString("utf8")) as unknown;
+        const anchor = JSON.parse(readFileSync(anchorPath, "utf8")) as unknown;
+        const ledgerVerification = verifyPublicReceiptLedger(ledger);
+        const anchorVerification = verifyActionLogAnchor({ ledgerBytes, anchor });
+        if (!ledgerVerification.ok || !anchorVerification.ok) {
+          throw new DemoHttpError(
+            503,
+            "public_evidence_invalid",
+            "The public evidence ledger failed integrity verification",
+            "Re-export and verify the public evidence before deployment.",
+          );
+        }
+        sendJson(
+          response,
+          200,
+          { ledger, anchor, verified: true },
           correlationId,
         );
         return;

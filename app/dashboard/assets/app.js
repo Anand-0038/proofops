@@ -5,6 +5,7 @@ const state = {
   issues: [],
   approvals: [],
   metrics: null,
+  keeperhub: null,
   selectedIncident: null,
   selectedRecord: null,
   selectedStage: "observe",
@@ -237,11 +238,58 @@ function renderReadiness() {
   localStatus.dataset.ready = String(local);
   $("#local-ready-label").textContent = local ? "LOCAL READY" : "LOCAL NOT READY";
   $("#verified-live-count").textContent = formatNumber(
-    health?.verifiedLiveEvidenceRecords ?? state.metrics?.liveConfirmed ?? 0,
+    Math.max(
+      health?.verifiedLiveEvidenceRecords ?? 0,
+      state.evidence.filter(isVerifiedLiveRecord).length,
+    ),
   );
   $("#evidence-record-count").textContent = formatNumber(
-    health?.validEvidenceRecords ?? state.evidence.length,
+    Math.max(health?.validEvidenceRecords ?? 0, state.evidence.length),
   );
+  const keeperhubReady = Boolean(state.keeperhub?.reachable);
+  const keeperhubNode = $("#keeperhub-readiness");
+  keeperhubNode.dataset.ready = String(keeperhubReady);
+  $("#keeperhub-status").textContent = keeperhubReady ? "CONNECTED" : "UNAVAILABLE";
+  $("#keeperhub-detail").textContent = keeperhubReady
+    ? `${formatNumber(state.keeperhub.toolCount)} MCP tools · server-side`
+    : state.keeperhub?.configured
+      ? "KeeperHub MCP check failed closed"
+      : "KeeperHub key not configured";
+}
+
+function publicReceiptAsEvidence(receipt) {
+  return {
+    runId: receipt.runId,
+    workflowId: receipt.keeperhubExecutionId,
+    workflowVersion: "public-receipt-v1",
+    triggerType: "blockchain_event",
+    agentVersion: "published",
+    policyVersion: "published",
+    chainId: receipt.chainId,
+    network: receipt.network,
+    evidenceMode: receipt.evidenceMode,
+    status: receipt.status,
+    createdAt: receipt.confirmedAt,
+    submittedAt: receipt.confirmedAt,
+    confirmedAt: receipt.confirmedAt,
+    policyDecision: "execute",
+    policyReasonCode: "verified_public_receipt",
+    policyReason: "Published from schema-validated local evidence.",
+    decisionRationale: "KeeperHub receipt, explorer transaction, and independent post-state agree.",
+    selectedAction: receipt.action,
+    simulationResult: receipt.simulation,
+    submissionAttempts: receipt.submissionAttempts,
+    retryReasons: receipt.retryReasons,
+    txHash: receipt.txHash,
+    explorerUrl: receipt.explorerUrl,
+    keeperhubExecutionId: receipt.keeperhubExecutionId,
+    keeperhubAuditReference: receipt.keeperhubAuditReference,
+    postState: receipt.postStateVerification,
+    conditionRecheck: {
+      strategy: "independent_rpc_post_state",
+      met: receipt.postStateVerification.ok,
+    },
+  };
 }
 
 function newestEvidence(predicate) {
@@ -888,19 +936,31 @@ async function loadConsole({
   $("#loading-state").hidden = false;
   $("#error-state").hidden = true;
   try {
-    const [health, incidents, evidence, metrics, approvals] = await Promise.all([
+    const [health, incidents, evidence, metrics, approvals, publicEvidence, keeperhub] = await Promise.all([
       fetchJson("/api/health"),
       fetchJson("/api/incidents"),
       fetchJson("/api/evidence"),
       fetchJson("/api/metrics"),
       fetchJson("/api/approvals"),
+      fetchJson("/api/public-evidence").catch(() => ({ ledger: { receipts: [] } })),
+      fetchJson("/api/integrations/keeperhub").catch(() => ({
+        configured: false,
+        reachable: false,
+        toolCount: 0,
+      })),
     ]);
     state.health = health;
     state.incidents = incidents.incidents ?? [];
-    state.evidence = evidence.records ?? [];
+    const published = (publicEvidence.ledger?.receipts ?? []).map(publicReceiptAsEvidence);
+    const localRunIds = new Set((evidence.records ?? []).map((record) => record.runId));
+    state.evidence = [
+      ...published.filter((record) => !localRunIds.has(record.runId)),
+      ...(evidence.records ?? []),
+    ];
     state.issues = evidence.issues ?? [];
     state.metrics = metrics;
     state.approvals = approvals.approvals ?? [];
+    state.keeperhub = keeperhub;
     state.selectedIncident ??= state.incidents[1] ?? state.incidents[0] ?? null;
 
     const retained = preserveSelection

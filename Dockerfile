@@ -9,6 +9,7 @@ COPY src ./src
 COPY scripts ./scripts
 COPY keeperhub-first-reliable-tx ./keeperhub-first-reliable-tx
 COPY app ./app
+COPY docs/evidence ./docs/evidence
 COPY data/.gitkeep ./data/.gitkeep
 
 RUN corepack pnpm run build \
@@ -29,6 +30,7 @@ RUN corepack pnpm install --frozen-lockfile --prod \
 
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/app ./app
+COPY --from=build /app/docs/evidence ./docs/evidence
 COPY --from=build --chown=node:node /app/data ./data
 
 USER node

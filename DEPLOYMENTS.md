@@ -33,6 +33,24 @@ Health: `GET http://127.0.0.1:3847/api/health`
 The response must report `localReady: true`. It will report
 `submissionReady: false` until an authoritative live EvidenceRecord exists.
 
+## Public console
+
+Deploy the console as one Node web service. Production configures
+`KEEPERHUB_API_KEY` as a secret environment variable and may leave
+`PROOFOPS_OPERATOR_TOKEN` unset. The server then generates a private operator
+token at startup, while public users remain read-only and cannot propose,
+approve, reset, or execute anything.
+
+Build command:
+
+```bash
+corepack enable && corepack pnpm install --frozen-lockfile && corepack pnpm build && corepack pnpm scenarios -- --small && corepack pnpm export:proof && corepack pnpm verify:proof
+```
+
+Start command: `corepack pnpm start`. Health path: `/api/health`.
+Verification must cover the dashboard, `/api/health`, `/api/public-evidence`,
+and `/api/integrations/keeperhub`; a provider `live` state alone is not proof.
+
 ## Testnet deployment record
 
 The burner deployer key was used only by Foundry to create the Sepolia test

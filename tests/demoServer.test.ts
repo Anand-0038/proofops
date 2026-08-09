@@ -71,6 +71,19 @@ async function start(options: {
     runCycleFn,
     staticDir: join(process.cwd(), "app/dashboard"),
     proofDir: join(temp, "proof"),
+    publicEvidenceDir: join(process.cwd(), "docs/evidence"),
+    keeperHubStatusFn: async () => ({
+      configured: true,
+      reachable: true,
+      transport: "mcp_streamable_http",
+      serverName: "KeeperHub",
+      serverVersion: "1.2.0",
+      protocolVersion: "2025-06-18",
+      toolCount: 35,
+      requiredTools: { searchWorkflows: true, callWorkflow: true },
+      checkedAt: "2026-08-09T00:00:00.000Z",
+      stale: false,
+    }),
     maxBodyBytes: options.maxBodyBytes,
   });
   servers.push(server);
@@ -153,6 +166,25 @@ describe("ProofOps demo server", () => {
     expect(health.headers.get("x-content-type-options")).toBe("nosniff");
     expect(health.headers.get("cache-control")).toContain("no-store");
     expect(health.headers.get("access-control-allow-origin")).toBeNull();
+  });
+
+  it("serves verified public receipts and sanitized KeeperHub MCP status", async () => {
+    const { baseUrl } = await start();
+    const [evidence, keeperhub] = await Promise.all([
+      fetch(`${baseUrl}/api/public-evidence`),
+      fetch(`${baseUrl}/api/integrations/keeperhub`),
+    ]);
+    expect(evidence.status).toBe(200);
+    expect(await evidence.json()).toMatchObject({
+      verified: true,
+      ledger: { schemaVersion: "proofops.public-receipts.v1" },
+      anchor: { schemaVersion: "proofops.action-log-anchor.v1" },
+    });
+    expect(await keeperhub.json()).toMatchObject({
+      configured: true,
+      reachable: true,
+      toolCount: 35,
+    });
   });
 
   it("does not treat a verified live receipt as complete submission evidence", async () => {
