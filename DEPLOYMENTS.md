@@ -44,7 +44,7 @@ approve, reset, or execute anything.
 Build command:
 
 ```bash
-corepack enable && corepack pnpm install --frozen-lockfile && corepack pnpm build && corepack pnpm scenarios -- --small && corepack pnpm export:proof && corepack pnpm verify:proof
+corepack pnpm install --frozen-lockfile && corepack pnpm build && corepack pnpm scenarios -- --small && corepack pnpm export:proof && corepack pnpm verify:proof
 ```
 
 Start command: `corepack pnpm start`. Health path: `/api/health`.
