@@ -1,0 +1,26 @@
+services:
+  proofops:
+    build:
+      context: .
+      target: runtime
+    ports:
+      - "3847:3847"
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      PORT: "3847"
+      PROOFOPS_ALLOWED_ORIGIN: "http://127.0.0.1:3847,http://localhost:3847"
+    volumes:
+      - proofops-data:/app/data
+    read_only: true
+    tmpfs:
+      - /tmp:size=32m,mode=1777
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    restart: unless-stopped
+
+volumes:
+  proofops-data:

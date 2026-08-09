@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 2,
+  "lockfile": "pnpm-lock.yaml",
+  "lockfileSha256": "fe6869fb172596c734a5fe8c0934de712b3cf418f19dcf30bbcec3e8c31ac428",
+  "productionOnly": true,
+  "auditLevel": "high",
+  "vulnerabilities": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  },
+  "generatedAt": "2026-08-09T10:05:35.887Z",
+  "command": "corepack pnpm audit --prod --audit-level=high --json"
+}

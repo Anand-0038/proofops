@@ -1,0 +1,114 @@
+name: proofops-ci
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: proofops-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  typescript:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: corepack enable
+      - run: corepack pnpm install --frozen-lockfile
+      - run: corepack pnpm run audit:verify
+      - run: corepack pnpm run typecheck
+      - run: corepack pnpm test
+      - run: corepack pnpm run build
+      - run: corepack pnpm run scenarios -- --small
+      - run: corepack pnpm run export:proof
+      - run: corepack pnpm run verify:proof
+      - uses: actions/upload-artifact@v4
+        with:
+          name: proofops-fixture-bundle
+          path: data/proof-bundle/
+
+  contracts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+      - name: Install forge-std
+        working-directory: contracts
+        run: forge install foundry-rs/forge-std --no-git
+      - name: Test IncidentOracle and ActionLog
+        run: forge test --root contracts
+
+  browser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: corepack enable
+      - run: corepack pnpm install --frozen-lockfile
+      - run: python -m pip install -r requirements-browser.txt
+      - run: python -m playwright install --with-deps chromium
+      - run: corepack pnpm run test:browser
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: proofops-browser-screenshots
+          path: docs/assets/screenshots/
+
+  secret-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  container:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          tags: proofops:ci
+          target: runtime
+
+  release-gate:
+    needs: [typescript, contracts, browser, secret-scan, container]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - uses: foundry-rs/foundry-toolchain@v1
+      - run: corepack enable
+      - run: corepack pnpm install --frozen-lockfile
+      - run: python -m pip install -r requirements-browser.txt
+      - run: python -m playwright install --with-deps chromium
+      - name: Install forge-std
+        working-directory: contracts
+        run: forge install foundry-rs/forge-std --no-git
+      - run: corepack pnpm run scenarios -- --small
+      - run: corepack pnpm run export:proof
+      - run: corepack pnpm run release:gate -- --local

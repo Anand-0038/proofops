@@ -1,0 +1,54 @@
+{
+  "name": "keeperhub-incident-keeper",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@10.28.1",
+  "description": "Bounded incident-response keeper agent: detect drift → policy → KeeperHub simulate/execute → proof bundle",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/scripts/demo-server.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:browser": "bash tests/browser/run.sh",
+    "test:watch": "vitest",
+    "test:contracts": "forge test --root contracts",
+    "lint": "tsc -p tsconfig.json --noEmit",
+    "onboarding:check": "tsx scripts/onboarding-check.ts",
+    "inject:failure": "tsx scripts/inject-failure.ts",
+    "scenarios": "tsx scripts/run-scenarios.ts",
+    "report": "tsx scripts/generate-report.ts",
+    "cycle": "tsx scripts/run-cycle.ts",
+    "dashboard": "tsx scripts/generate-report.ts",
+    "deploy:oracle": "tsx scripts/deploy-oracle.ts",
+    "workflow:create": "tsx scripts/create-workflow.ts",
+    "mcp:tools": "tsx scripts/list-mcp-tools.ts",
+    "preflight": "tsx keeperhub-first-reliable-tx/scripts/preflight.ts",
+    "first-tx": "tsx keeperhub-first-reliable-tx/scripts/first-tx.ts",
+    "approve": "tsx scripts/approve.ts",
+    "export:proof": "tsx scripts/export-proof-bundle.ts",
+    "verify:proof": "tsx scripts/verify-proof-bundle.ts",
+    "record:action": "tsx scripts/record-action.ts",
+    "anvil:harness": "tsx scripts/anvil-harness.ts",
+    "demo:server": "tsx scripts/demo-server.ts",
+    "audit:dependencies": "tsx scripts/audit-dependencies.ts --update",
+    "audit:verify": "tsx scripts/audit-dependencies.ts",
+    "verify:local": "bash scripts/verify-local.sh",
+    "release:gate": "tsx scripts/release-gate.ts",
+    "release:submission": "tsx scripts/release-gate.ts --submission-only"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "viem": "^2.23.2",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.8"
+  }
+}

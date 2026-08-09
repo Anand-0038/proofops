@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <meta name="color-scheme" content="light dark">
+    <meta
+      name="description"
+      content="ProofOps is a bounded KeeperHub incident responder with a tamper-evident flight recorder."
+    >
+    <meta property="og:title" content="ProofOps · Incident Flight Recorder">
+    <meta
+      property="og:description"
+      content="ProofOps observes protocol drift, proves mitigation decisions, and exports tamper-evident incident evidence."
+    >
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="/assets/og-image.svg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="ProofOps incident flight recorder dashboard">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ProofOps · Incident Flight Recorder">
+    <meta
+      name="twitter:description"
+      content="ProofOps observes protocol drift, proves mitigation decisions, and exports tamper-evident evidence."
+    >
+    <meta name="twitter:image" content="/assets/og-image.svg">
+    <title>ProofOps · Incident Flight Recorder</title>
+    <link rel="icon" href="/assets/icons.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/assets/logo.svg">
+    <link rel="stylesheet" href="/assets/styles.css">
+    <script type="module" src="/assets/app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to incident console</a>
+
+    <header class="masthead" aria-label="ProofOps header">
+      <a class="wordmark" href="/" aria-label="ProofOps home">
+        <img src="/assets/logo.svg" width="36" height="36" alt="">
+        <span>PROOF<span>OPS</span></span>
+      </a>
+      <div class="system-strip" aria-label="System status">
+        <span class="system-pulse" aria-hidden="true"></span>
+        <span>BOUNDED RESPONDER</span>
+        <span class="strip-rule" aria-hidden="true"></span>
+        <span>KEEPERHUB EXECUTION ONLY</span>
+      </div>
+      <div class="masthead-actions">
+        <button
+          class="quiet-button"
+          id="theme-toggle"
+          type="button"
+          aria-label="Switch to light mode"
+          aria-pressed="false"
+        >
+          Light mode
+        </button>
+        <button
+          class="quiet-button"
+          id="refresh-console"
+          type="button"
+          aria-label="Refresh console data"
+        >
+          Refresh
+        </button>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="incident-brief">
+          <p class="eyebrow">INCIDENT FLIGHT RECORDER / SEPOLIA</p>
+          <h1 id="hero-title">Every mitigation should survive an investigation.</h1>
+          <p class="hero-copy">
+            ProofOps detects unsafe protocol drift, proves a bounded response,
+            and routes every judged state change through KeeperHub. The record
+            below shows exactly what happened—and what did not.
+          </p>
+
+          <div class="readiness" aria-label="Local proof status">
+            <div class="readiness-item" data-ready="true">
+              <span class="readiness-led" aria-hidden="true"></span>
+              <span>
+                <strong id="local-ready-label">LOCAL READY</strong>
+                <small>code, browser, verifier</small>
+              </span>
+            </div>
+            <div class="readiness-metric">
+              <strong id="verified-live-count">0</strong>
+              <span>verified live receipts</span>
+            </div>
+            <div class="readiness-metric">
+              <strong id="evidence-record-count">0</strong>
+              <span>valid evidence records</span>
+            </div>
+          </div>
+
+          <form class="action-console" id="cycle-form">
+            <div class="field">
+              <label for="operator-token">Local operator token</label>
+              <div class="input-row">
+                <input
+                  id="operator-token"
+                  name="operator-token"
+                  type="password"
+                  autocomplete="off"
+                  spellcheck="false"
+                  placeholder="Paste .proofops-operator-token"
+                  aria-describedby="token-help"
+                >
+                <button
+                  class="icon-button"
+                  id="toggle-token"
+                  type="button"
+                  aria-label="Show operator token"
+                  aria-pressed="false"
+                >
+                  Show
+                </button>
+              </div>
+              <small id="token-help">
+                Kept in memory for this tab. Never stored by the browser.
+              </small>
+            </div>
+            <button class="primary-button" id="build-proof" type="submit">
+              <span>Build mitigation proof</span>
+              <span aria-hidden="true">→</span>
+            </button>
+          </form>
+          <p class="action-note">
+            This action observes and proposes only. Execution remains locked
+            behind a fingerprint-bound, expiring approval.
+          </p>
+        </div>
+
+        <figure class="hero-visual">
+          <img
+            src="/assets/proofops-flight-recorder.webp"
+            width="1672"
+            height="941"
+            alt=""
+            fetchpriority="high"
+          >
+          <figcaption>
+            <span>BLACK BOX / KH-IR-08</span>
+            <span>8 CHECKPOINTS · 1 EXECUTION AUTHORITY</span>
+          </figcaption>
+        </figure>
+      </section>
+
+      <nav class="judge-route" aria-label="90-second evidence path">
+        <div class="route-intro">
+          <p class="eyebrow">90-SECOND PATH</p>
+          <strong>Follow the proof, not the pitch.</strong>
+        </div>
+        <button class="route-step" id="inspect-live-proof" type="button">
+          <span class="route-index">01</span>
+          <span>
+            <strong>Verify the execution</strong>
+            <small id="live-route-detail">Find the newest confirmed KeeperHub receipt</small>
+          </span>
+          <span aria-hidden="true">↘</span>
+        </button>
+        <button class="route-step" id="inspect-safety-proof" type="button">
+          <span class="route-index">02</span>
+          <span>
+            <strong>Inspect the safety gate</strong>
+            <small>See a reverting call stopped before submission</small>
+          </span>
+          <span aria-hidden="true">↘</span>
+        </button>
+        <button class="route-step" id="inspect-recovery-proof" type="button">
+          <span class="route-index">03</span>
+          <span>
+            <strong>Trace reconciliation</strong>
+            <small>Follow an interrupted call without a duplicate action</small>
+          </span>
+          <span aria-hidden="true">↘</span>
+        </button>
+      </nav>
+
+      <section class="rail-section" aria-labelledby="rail-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">FORENSIC SEQUENCE</p>
+            <h2 id="rail-title">Mitigation proof rail</h2>
+          </div>
+          <div class="selected-run">
+            <span>ACTIVE RECORD</span>
+            <code id="selected-run-id">waiting for evidence</code>
+          </div>
+        </div>
+
+        <div class="rail-shell">
+          <div class="signal-track" aria-hidden="true">
+            <span class="signal-pulse"></span>
+          </div>
+          <div class="execution-rail" aria-label="Eight proof checkpoints">
+            <button class="rail-stage" data-stage="observe" type="button" aria-controls="stage-detail" aria-expanded="true">
+              <span class="stage-index">01</span><span>OBSERVE</span>
+            </button>
+            <button class="rail-stage" data-stage="policy" type="button" aria-controls="stage-detail" aria-expanded="false">
+              <span class="stage-index">02</span><span>POLICY</span>
+            </button>
+            <button class="rail-stage" data-stage="approval" type="button" aria-controls="stage-detail" aria-expanded="false">
+              <span class="stage-index">03</span><span>APPROVAL</span>
+            </button>
+            <button class="rail-stage" data-stage="simulate" type="button" aria-controls="stage-detail" aria-expanded="false">
+              <span class="stage-index">04</span><span>SIMULATE</span>
+            </button>
+            <button class="rail-stage" data-stage="execute" type="button" aria-controls="stage-detail" aria-expanded="false">
+              <span class="stage-index">05</span><span>EXECUTE</span>
+            </button>
+            <button class="rail-stage" data-stage="reconcile" type="button" aria-controls="stage-detail" aria-expanded="false">
+              <span class="stage-index">06</span><span>RECONCILE</span>
+            </button>
+            <button class="rail-stage" data-stage="verify" type="button" aria-controls="stage-detail" aria-expanded="false">
+              <span class="stage-index">07</span><span>VERIFY</span>
+            </button>
+            <button class="rail-stage" data-stage="anchor" type="button" aria-controls="stage-detail" aria-expanded="false">
+              <span class="stage-index">08</span><span>ANCHOR</span>
+            </button>
+          </div>
+          <article class="stage-detail" id="stage-detail" tabindex="-1">
+            <div>
+              <p class="eyebrow" id="stage-kicker">CHECKPOINT 01</p>
+              <h3 id="stage-title">Awaiting observation</h3>
+            </div>
+            <p id="stage-summary">
+              Load evidence to inspect the observation that opened this incident.
+            </p>
+            <dl id="stage-facts" class="fact-grid"></dl>
+          </article>
+        </div>
+      </section>
+
+      <section class="workspace" aria-label="Incident evidence workspace">
+        <aside class="incident-queue" aria-labelledby="queue-title">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">SIGNAL QUEUE</p>
+              <h2 id="queue-title">Incident briefs</h2>
+            </div>
+            <span class="count" id="incident-count">0</span>
+          </div>
+          <div id="incident-list" class="incident-list"></div>
+          <div class="empty-panel" id="incident-empty">
+            No incident fixtures are available.
+          </div>
+        </aside>
+
+        <section class="record-panel" aria-labelledby="record-title">
+          <div class="panel-heading record-heading">
+            <div>
+              <p class="eyebrow">EVIDENCE ENVELOPE</p>
+              <h2 id="record-title">Latest recorder entry</h2>
+            </div>
+            <span class="trust-badge" id="record-mode" data-mode="fixture">FIXTURE</span>
+          </div>
+
+          <div class="truth-callout">
+            <strong id="truth-title">A fixture is a rehearsal, never a transaction.</strong>
+            <span id="mode-explanation">
+              Explorer and KeeperHub audit links appear only for schema-verified
+              live evidence.
+            </span>
+          </div>
+
+          <div class="record-grid">
+            <article class="instrument">
+              <p class="instrument-label">Context snapshot</p>
+              <dl class="compact-facts" id="context-facts"></dl>
+            </article>
+            <article class="instrument">
+              <p class="instrument-label">Policy receipt</p>
+              <dl class="compact-facts" id="policy-facts"></dl>
+            </article>
+            <article class="instrument">
+              <p class="instrument-label">Simulation</p>
+              <dl class="compact-facts" id="simulation-facts"></dl>
+            </article>
+            <article class="instrument">
+              <p class="instrument-label">Post-state verification</p>
+              <dl class="compact-facts" id="verification-facts"></dl>
+            </article>
+          </div>
+
+          <article class="attempts">
+            <div class="instrument-label-row">
+              <p class="instrument-label">Attempt &amp; recovery timeline</p>
+              <span id="attempt-count">0 submissions</span>
+            </div>
+            <ol id="attempt-list" class="attempt-list"></ol>
+          </article>
+
+          <article class="proof-receipt">
+            <div>
+              <p class="eyebrow">PORTABLE PROOF</p>
+              <h3>Download the evidence, not a success claim.</h3>
+              <p id="proof-copy">
+                Each export includes per-file SHA-256 digests and an independent
+                verification result.
+              </p>
+            </div>
+            <nav class="download-actions" aria-label="Proof bundle downloads">
+              <a href="/api/proof/manifest.json" download>Manifest</a>
+              <a href="/api/proof/proof-bundle.json" download>JSON</a>
+              <a href="/api/proof/proof-bundle.md" download>Markdown</a>
+              <a href="/api/proof/verification.json" download>Verification</a>
+            </nav>
+            <div id="verified-links" class="verified-links"></div>
+          </article>
+
+          <details class="raw-disclosure">
+            <summary>Inspect raw evidence JSON</summary>
+            <pre id="raw-evidence" tabindex="0">No evidence selected.</pre>
+          </details>
+        </section>
+
+        <aside class="approval-panel" aria-labelledby="approval-title">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">HUMAN GATE</p>
+              <h2 id="approval-title">Bound approvals</h2>
+            </div>
+            <span class="count" id="approval-count">0</span>
+          </div>
+          <p class="panel-copy">
+            High-severity actions expire after 15 minutes and are bound to the
+            exact call fingerprint. Approval never changes incident severity.
+          </p>
+          <div id="approval-list" class="approval-list"></div>
+          <div class="empty-panel" id="approval-empty">
+            No pending approvals. Build a mitigation proof to evaluate policy.
+          </div>
+        </aside>
+      </section>
+
+      <section class="evidence-index" aria-labelledby="evidence-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">RECORDER INDEX</p>
+            <h2 id="evidence-title">Evidence history</h2>
+          </div>
+          <div class="trust-legend" aria-label="Evidence trust modes">
+            <span class="trust-badge" data-mode="fixture">FIXTURE</span>
+            <span class="trust-badge" data-mode="mixed">MIXED</span>
+            <span class="trust-badge" data-mode="live">LIVE</span>
+          </div>
+        </div>
+        <div class="evidence-toolbar" aria-label="Evidence history filters">
+          <div class="filter-field filter-search">
+            <label for="evidence-search">Find a record</label>
+            <input
+              id="evidence-search"
+              type="search"
+              autocomplete="off"
+              placeholder="Run ID, outcome, or reason code"
+            >
+          </div>
+          <div class="filter-field">
+            <label for="evidence-trust-filter">Trust mode</label>
+            <select id="evidence-trust-filter">
+              <option value="all">All modes</option>
+              <option value="live">Live</option>
+              <option value="fixture">Fixture</option>
+              <option value="mixed">Mixed</option>
+            </select>
+          </div>
+          <div class="filter-field">
+            <label for="evidence-outcome-filter">Outcome</label>
+            <select id="evidence-outcome-filter">
+              <option value="all">All outcomes</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="simulation_blocked">Simulation blocked</option>
+              <option value="fixture_recovered">Recovered fixture</option>
+              <option value="policy_blocked">Policy blocked</option>
+              <option value="approval_required">Approval required</option>
+            </select>
+          </div>
+        </div>
+        <div class="evidence-result-bar">
+          <p id="evidence-summary" aria-live="polite">Loading evidence index…</p>
+          <button class="text-button" id="reset-evidence-filters" type="button">
+            Reset filters
+          </button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Recorded</th>
+                <th scope="col">Run</th>
+                <th scope="col">Trust</th>
+                <th scope="col">Outcome</th>
+                <th scope="col">Attempts</th>
+                <th scope="col">Source</th>
+              </tr>
+            </thead>
+            <tbody id="evidence-rows"></tbody>
+          </table>
+        </div>
+        <div class="evidence-footer">
+          <p id="evidence-filter-empty" hidden>
+            No records match these filters. Reset the index to continue.
+          </p>
+          <button class="quiet-button" id="show-more-evidence" type="button">
+            Show 12 more records
+          </button>
+        </div>
+      </section>
+
+      <section class="system-states" aria-live="polite" aria-atomic="true">
+        <div id="loading-state" class="system-message" data-state="loading">
+          <span class="loader" aria-hidden="true"></span>
+          Loading incident recorder…
+        </div>
+        <div id="empty-state" class="system-message" data-state="empty" hidden>
+          No valid evidence yet. Build a fixture proof to start the recorder.
+        </div>
+        <div id="error-state" class="system-message" data-state="error" role="alert" hidden>
+          <span id="error-message">The recorder could not be loaded.</span>
+          <button class="quiet-button" id="retry-load" type="button">Try again</button>
+        </div>
+        <div id="action-status" class="system-message" data-state="status" hidden></div>
+      </section>
+    </main>
+
+    <footer>
+      <span>ProofOps / KeeperHub Incident Response</span>
+      <span>NO LOCAL SIGNING · FAIL CLOSED · EXPORT VERIFIABLE</span>
+    </footer>
+  </body>
+</html>

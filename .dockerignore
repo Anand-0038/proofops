@@ -1,0 +1,17 @@
+.git
+.github
+.env
+.env.*
+.proofops-operator-token
+.venv-browser
+node_modules
+dist
+coverage
+playwright-report
+test-results
+contracts/cache
+contracts/out
+contracts/lib
+data/*.jsonl
+data/proof-bundle
+*.log

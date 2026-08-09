@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#061220"/>
+      <stop offset="52%" stop-color="#0A2130"/>
+      <stop offset="100%" stop-color="#102a3c"/>
+    </linearGradient>
+    <linearGradient id="line" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0B2B3A"/>
+      <stop offset="100%" stop-color="#EE9360"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="48" y="48" width="1104" height="534" rx="26" fill="#07131c" fill-opacity="0.94"/>
+  <rect x="48" y="48" width="1104" height="8" rx="4" fill="url(#line)"/>
+  <rect x="120" y="120" width="960" height="390" rx="16" fill="#0B2B3A" fill-opacity="0.26" stroke="#124154" stroke-width="2"/>
+
+  <g transform="translate(180 170)">
+    <rect x="0" y="0" width="34" height="34" rx="4" fill="#0B2B3A" stroke="#C86F3D" stroke-width="2"/>
+    <path d="M7 25V11h8.4c4.3 0 7.1 2.3 7.1 6.1 0 3.9-2.8 6.2-7.1 6.2h-3.1V25H7Zm5.3-6.1h2.6c1.5 0 2.3-.6 2.3-1.8 0-1.1-.8-1.7-2.3-1.7h-2.6v3.5Z" fill="#E7E2D6"/>
+    <circle cx="26.5" cy="8.5" r="3" fill="#78DCE8"/>
+    <text x="60" y="28" fill="#E7E2D6" font-family="Arial, 'Segoe UI', sans-serif" font-size="28" letter-spacing="0.1em" font-weight="700">PROOFOPS</text>
+  </g>
+
+  <text x="180" y="300" fill="#E7E2D6" font-family="Arial, 'Segoe UI', sans-serif" font-size="58" font-weight="800" letter-spacing="-0.04em">Incident Flight Recorder</text>
+  <text x="180" y="372" fill="#c9c7be" font-family="Arial, 'Segoe UI', sans-serif" font-size="30" letter-spacing="0.01em">Observe · Decide · Prove · Reconcile</text>
+  <text x="180" y="460" fill="#78dce8" font-family="Arial, 'Segoe UI', sans-serif" font-size="24" font-weight="700">Evidence-first onchain incident response</text>
+
+  <g transform="translate(180 500)">
+    <rect x="0" y="0" width="840" height="50" rx="8" fill="#0B2B3A" fill-opacity="0.45"/>
+    <text x="22" y="34" fill="#c86f3d" font-family="Arial, 'Segoe UI', sans-serif" font-size="24" font-weight="700">ProofOps · KeeperHub · 07/30/2026</text>
+  </g>
+</svg>

@@ -1,0 +1,15 @@
+{
+  "title": "time-to-first-confirmed-transaction",
+  "evidenceMode": "fixture",
+  "confirmed": false,
+  "elapsedMs": 0,
+  "manualStepCount": 0,
+  "status": "fixture_only",
+  "executionId": null,
+  "txHash": null,
+  "explorerUrl": null,
+  "requestId": null,
+  "error": null,
+  "nextAction": "Run corepack pnpm run preflight with a real kh_ organization key.",
+  "measuredAt": "2026-07-30T04:31:36.517Z"
+}

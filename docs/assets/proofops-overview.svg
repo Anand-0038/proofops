@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">ProofOps architecture and trust boundaries</title>
+  <desc id="desc">Independent observation flows through typed runbooks, deterministic policy, exact approval, KeeperHub simulation and execution, reconciliation, verification, and a tamper-evident proof bundle.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07111d"/>
+      <stop offset="1" stop-color="#0d1d2b"/>
+    </linearGradient>
+    <linearGradient id="copper" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#9b6440"/>
+      <stop offset="1" stop-color="#e0a16c"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <style>
+      .label{font:700 24px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:2px;fill:#eff6f7}
+      .small{font:500 18px Inter,Arial,sans-serif;fill:#9eb0bb}
+      .stage{fill:#102534;stroke:#294453;stroke-width:2}
+      .keeper{fill:#172634;stroke:url(#copper);stroke-width:3}
+      .cyan{stroke:#4bc8e7;fill:none;stroke-width:4}
+      .copper{stroke:#d89762;fill:none;stroke-width:4}
+    </style>
+    <marker id="arrow-cyan" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0L12 6L0 12z" fill="#4bc8e7"/></marker>
+    <marker id="arrow-copper" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0L12 6L0 12z" fill="#d89762"/></marker>
+  </defs>
+  <rect width="1600" height="900" rx="34" fill="url(#bg)"/>
+  <path d="M70 120H1530" stroke="#1c3443" stroke-width="1"/>
+  <text x="78" y="78" class="label" font-size="30">PROOFOPS / INCIDENT FLIGHT RECORDER</text>
+  <text x="1522" y="78" text-anchor="end" class="small">every mitigation should survive an investigation</text>
+
+  <g transform="translate(70 175)">
+    <rect class="stage" width="240" height="150" rx="18"/>
+    <circle cx="42" cy="44" r="11" fill="#4bc8e7" filter="url(#glow)"/>
+    <text x="68" y="53" class="label">OBSERVE</text>
+    <text x="28" y="95" class="small">RPC / Blockscout</text>
+    <text x="28" y="124" class="small">timestamped pre-state</text>
+  </g>
+  <g transform="translate(370 175)">
+    <rect class="stage" width="240" height="150" rx="18"/>
+    <text x="28" y="53" class="label">DRIFT</text>
+    <text x="28" y="95" class="small">cross-signal finding</text>
+    <text x="28" y="124" class="small">typed runbook</text>
+  </g>
+  <g transform="translate(670 175)">
+    <rect class="stage" width="240" height="150" rx="18"/>
+    <text x="28" y="53" class="label">POLICY</text>
+    <text x="28" y="95" class="small">allowlist · caps</text>
+    <text x="28" y="124" class="small">cooldown · severity</text>
+  </g>
+  <g transform="translate(970 175)">
+    <rect class="stage" width="240" height="150" rx="18"/>
+    <text x="28" y="53" class="label">APPROVE</text>
+    <text x="28" y="95" class="small">exact SHA-256 action</text>
+    <text x="28" y="124" class="small">15-minute expiry</text>
+  </g>
+  <g transform="translate(1270 175)">
+    <rect class="keeper" width="260" height="150" rx="18"/>
+    <text x="28" y="53" class="label">SIMULATE</text>
+    <text x="28" y="95" class="small">KeeperHub dry-run</text>
+    <text x="28" y="124" class="small">atomic condition</text>
+  </g>
+
+  <path d="M310 250H356" class="cyan" marker-end="url(#arrow-cyan)"/>
+  <path d="M610 250H656" class="cyan" marker-end="url(#arrow-cyan)"/>
+  <path d="M910 250H956" class="cyan" marker-end="url(#arrow-cyan)"/>
+  <path d="M1210 250H1256" class="copper" marker-end="url(#arrow-copper)"/>
+
+  <g transform="translate(1270 465)">
+    <rect class="keeper" width="260" height="150" rx="18"/>
+    <text x="28" y="53" class="label">EXECUTE</text>
+    <text x="28" y="95" class="small">managed wallet</text>
+    <text x="28" y="124" class="small">idempotent intent</text>
+  </g>
+  <g transform="translate(920 465)">
+    <rect class="keeper" width="290" height="150" rx="18"/>
+    <text x="28" y="53" class="label">RECONCILE</text>
+    <text x="28" y="95" class="small">terminal execution ID</text>
+    <text x="28" y="124" class="small">audit + explorer receipt</text>
+  </g>
+  <g transform="translate(580 465)">
+    <rect class="stage" width="280" height="150" rx="18"/>
+    <text x="28" y="53" class="label">VERIFY</text>
+    <text x="28" y="95" class="small">independent post-state</text>
+    <text x="28" y="124" class="small">expected invariant</text>
+  </g>
+  <g transform="translate(70 450)">
+    <rect x="0" y="0" width="440" height="180" rx="22" fill="#102534" stroke="#4bc8e7" stroke-width="2"/>
+    <text x="30" y="52" class="label">PROOF BUNDLE</text>
+    <text x="30" y="94" class="small">decision · simulation · attempts · receipt</text>
+    <text x="30" y="125" class="small">fixture / mixed / live truth mode</text>
+    <text x="30" y="156" class="small">SHA-256 manifest + ActionLog anchor</text>
+  </g>
+
+  <path d="M1400 325V451" class="copper" marker-end="url(#arrow-copper)"/>
+  <path d="M1270 540H1224" class="copper" marker-end="url(#arrow-copper)"/>
+  <path d="M920 540H874" class="copper" marker-end="url(#arrow-copper)"/>
+  <path d="M580 540H524" class="cyan" marker-end="url(#arrow-cyan)"/>
+
+  <g transform="translate(70 735)">
+    <rect width="1460" height="105" rx="18" fill="#091722" stroke="#233c4b"/>
+    <text x="26" y="40" class="label" font-size="20">AUTHORITY BOUNDARY</text>
+    <text x="26" y="75" class="small">LLM may propose · deterministic code authorizes · KeeperHub simulates, signs, executes, and audits · independent reads verify</text>
+    <circle cx="1372" cy="52" r="12" fill="#4bc8e7"/>
+    <circle cx="1414" cy="52" r="12" fill="#d89762"/>
+  </g>
+</svg>
