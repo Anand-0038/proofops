@@ -14,7 +14,7 @@ RPC provider.
 | Status polling and hints | reconcile to a terminal receipt | handles ambiguous submission outcomes |
 | Execution audit reference | joins KeeperHub truth to EvidenceRecord | makes the receipt independently inspectable |
 | Chains/wallet/balances APIs | deterministic onboarding preflight | catches scope, wallet, chain, and funding issues early |
-| Hosted MCP/schema discovery | agent-tool discovery and organization scope | exposes runbooks without granting authority |
+| Hosted MCP discovery | real `initialize` + `tools/list` + `search_workflows` session with organization auth | proves agent-visible KeeperHub tools without granting write authority |
 
 Workflow creation remains an optional deployment convenience. Payment rails are
 intentionally excluded because they do not strengthen the incident safety
@@ -94,7 +94,7 @@ boundary.
 ## Live validation status
 
 All request parity, simulation, retry, reconciliation, error, fixture-integrity,
-and receipt-validation paths are covered locally. A real organization
+MCP discovery, and receipt-validation paths are covered locally. A real organization
 credential is configured only in the ignored local environment. Two terminal
 KeeperHub executions are verified on Sepolia, including the primary mitigation
 receipt and its independent `paused == true` post-state. The corrected unsafe

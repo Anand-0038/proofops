@@ -15,6 +15,7 @@ The release gate deliberately reports two states:
 - [x] Simulation, idempotency, reconciliation, and terminal status tests pass
 - [x] Fixture, mixed, and live evidence invariants enforced
 - [x] Tamper-evident proof manifest verifies
+- [x] Sanitized public KeeperHub receipt ledger verifies
 - [x] ActionLog attestation path uses KeeperHub only
 - [x] Operator API authentication, origin, media, size, and redaction tests pass
 - [x] Desktop/mobile browser journey passes with no console errors

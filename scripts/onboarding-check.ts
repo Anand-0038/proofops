@@ -36,12 +36,20 @@ async function main(): Promise<void> {
 
   const client = new KeeperHubClient();
 
-  // 2) MCP ping
+  // 2) Official MCP initialize + tools/list discovery
   const mcp = await client.pingMcp();
   if (!mcp.ok) {
     fail("mcp", mcp.detail);
   }
   ok("mcp", mcp.detail);
+  if (mcp.tools) {
+    const expected = ["search_workflows", "call_workflow"];
+    const present = expected.filter((tool) => mcp.tools?.includes(tool));
+    ok(
+      "mcp-tools",
+      `${present.length}/${expected.length} marketplace meta-tools present; inventory=${mcp.tools.length}`,
+    );
+  }
 
   // 2b) Optional Blockscout MCP ping for read-layer integrity
   const blockscoutMcp = env.BLOCKSCOUT_MCP_URL;

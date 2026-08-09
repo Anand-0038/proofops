@@ -10,7 +10,7 @@ proof bundle.
 > Every mitigation should survive an investigation.
 
 [![CI](https://img.shields.io/badge/CI-release%20gated-48c8e8)](.github/workflows/ci.yml)
-[![Tests](https://img.shields.io/badge/tests-101%20passed-66d19e)](docs/release-checklist.md)
+[![Tests](https://img.shields.io/badge/tests-116%20passed-66d19e)](docs/release-checklist.md)
 [![Contracts](https://img.shields.io/badge/Foundry-11%20passed-cd8b5b)](contracts/test)
 [![License](https://img.shields.io/badge/license-MIT-e8edf2)](LICENSE)
 
@@ -88,7 +88,9 @@ trail; what remains is only a detector. See the
 Current repository evidence is **144 valid runs, 8 quarantined legacy rows, and
 2 verified live KeeperHub executions**. The primary live receipt is independently
 bound to a Sepolia transaction, KeeperHub audit reference, and verified
-post-state. See the generated [reliability report](docs/reliability-report.md).
+post-state. Inspect the sanitized, digest-bound
+[public receipt ledger](docs/evidence/verified-live-receipts.json) or the
+generated [reliability report](docs/reliability-report.md).
 
 ## Run it
 
@@ -137,11 +139,13 @@ local key.
 
 ## Engineering evidence
 
-- 109 passing Vitest tests and one credential-gated live test
+- 116 passing Vitest tests and two credential-gated live tests
 - 11 passing Foundry contract tests
 - real Chromium acceptance at 1440×1000, 390×844, and 320×800
 - authentication, origin, body-size, content-type, redaction, and fixture-link
   browser assertions
+- live official KeeperHub MCP initialization, tool discovery, and read-only
+  marketplace search validation
 - lockfile-bound production dependency audit with zero known vulnerabilities
 - multi-stage non-root container with a read-only Compose runtime
 - CI gates for TypeScript, contracts, browser, secrets, container, and release
@@ -179,10 +183,11 @@ transaction and public submission URLs.
 - [x] Judge guide, demo script, shot list, onboarding artifact, and security
   model packaged
 - [x] Record and validate real KeeperHub transactions, including independent post-state
-- [ ] Publish the repository, hosted console, and under-three-minute video
+- [x] Publish the repository at [`Anand-0038/proofops`](https://github.com/Anand-0038/proofops)
+- [ ] Publish the hosted console and under-three-minute video
 - [ ] Run the strict release gate with those public URLs
 
-The remaining rows require publishing authority and a durable public proof
+The remaining rows require hosting/video work and a durable public proof
 location for the optional ActionLog anchor. Fixture evidence cannot satisfy
 the live receipt gate. The exact handoff is in
 [DEPLOYMENTS.md](DEPLOYMENTS.md) and the

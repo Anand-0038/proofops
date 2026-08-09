@@ -1,6 +1,7 @@
 import { env, redactSecrets } from "../config/env.js";
 import { KeeperHubHttp } from "./http.js";
 import { ReliableExecutor } from "./execution.js";
+import { KeeperHubMcpClient, type KeeperHubMcpDiscovery } from "./mcp.js";
 import type {
   ConditionalRunbookIntent,
 } from "../agent/IncidentRunbooks.js";
@@ -26,7 +27,8 @@ export type {
 /**
  * KeeperHub REST client — the ONLY egress for state-changing on-chain actions.
  * Uses Direct Execution API with simulate flag + status polling.
- * MCP endpoint is pinged for connectivity; tool calls map to the same REST surface.
+ * MCP discovery uses the official JSON-RPC transport; writes remain on the
+ * same typed, policy-gated REST execution boundary.
  */
 export class KeeperHubClient {
   readonly apiUrl: string;
@@ -34,6 +36,7 @@ export class KeeperHubClient {
   private readonly apiKey: string;
   private readonly chainId: number;
   private readonly http: KeeperHubHttp;
+  private readonly fetchFn?: KeeperHubFetch;
   /** Test/injection hooks */
   private failureMode: string;
   private attemptOffset = 0;
@@ -55,20 +58,12 @@ export class KeeperHubClient {
       apiUrl: this.apiUrl,
       fetchFn: options?.fetchFn,
     });
+    this.fetchFn = options?.fetchFn;
     this.failureMode = options?.failureMode ?? env.INJECT_FAILURE_MODE ?? "";
   }
 
   setFailureMode(mode: string): void {
     this.failureMode = mode;
-  }
-
-  private headers(): Record<string, string> {
-    const h: Record<string, string> = {
-      Authorization: `Bearer ${this.apiKey}`,
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    };
-    return h;
   }
 
   async request<T>(
@@ -87,32 +82,40 @@ export class KeeperHubClient {
     return this.http.request<T>(method, path, body, { idempotencyKey });
   }
 
-  /** Ping MCP endpoint (auth header). Does not execute anything. */
-  async pingMcp(): Promise<{ ok: boolean; detail: string }> {
+  /** Initialize the official MCP server and discover its actual tool inventory. */
+  async discoverMcpTools(): Promise<KeeperHubMcpDiscovery> {
+    return new KeeperHubMcpClient({
+      url: this.mcpUrl,
+      apiKey: this.apiKey,
+      fetchFn: this.fetchFn,
+    }).discoverTools();
+  }
+
+  /** Read-only MCP initialization and tools/list probe. */
+  async pingMcp(): Promise<{ ok: boolean; detail: string; tools?: string[] }> {
     try {
-      const res = await fetch(this.mcpUrl, {
-        method: "GET",
-        headers: this.headers(),
+      const mcpClient = new KeeperHubMcpClient({
+        url: this.mcpUrl,
+        apiKey: this.apiKey,
+        fetchFn: this.fetchFn,
       });
-      const text = redactSecrets((await res.text()).slice(0, 200));
-      if (res.status === 401 || res.status === 403) {
-        return {
-          ok: false,
-          detail: `MCP auth failed (${res.status}). ${text}`,
-        };
-      }
-      // MCP may return 405/406 on bare GET — still proves reachability + auth acceptance
-      if (res.status === 401) {
-        return { ok: false, detail: text };
+      const discovery = await mcpClient.discoverTools();
+      const tools = discovery.tools.map((tool) => tool.name);
+      if (tools.includes("search_workflows")) {
+        await mcpClient.callTool("search_workflows", {
+          query: "incident response",
+          category: "defi",
+        });
       }
       return {
-        ok: res.status < 500,
-        detail: `MCP reachable HTTP ${res.status}: ${text || "(empty)"}`,
+        ok: true,
+        detail: `MCP ${discovery.serverName} ${discovery.serverVersion} initialized (${tools.length} tools discovered; marketplace search verified)`,
+        tools,
       };
     } catch (e) {
       return {
         ok: false,
-        detail: `MCP unreachable: ${redactSecrets(String(e))}`,
+        detail: `MCP discovery failed: ${redactSecrets(String(e))}`,
       };
     }
   }

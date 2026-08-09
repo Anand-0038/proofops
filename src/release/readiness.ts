@@ -12,6 +12,7 @@ export interface ReleaseFacts {
   contractTestsPassed: boolean;
   browserTestsPassed: boolean;
   proofVerified: boolean;
+  publicEvidencePassed: boolean;
   dependencyAuditPassed: boolean;
   secretFindings: string[];
   localSigningFindings: string[];
@@ -220,6 +221,12 @@ export function evaluateReleaseFacts(
     check("contract_tests", facts.contractTestsPassed, "passed", "failed"),
     check("browser_tests", facts.browserTestsPassed, "passed", "failed"),
     check("proof_manifest", facts.proofVerified, "verified", "missing or invalid"),
+    check(
+      "public_live_evidence",
+      facts.publicEvidencePassed,
+      "sanitized KeeperHub receipts verified",
+      "public receipt ledger is missing, invalid, or tampered",
+    ),
     check(
       "dependency_audit",
       facts.dependencyAuditPassed,

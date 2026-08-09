@@ -1,0 +1,72 @@
+{
+  "schemaVersion": "proofops.public-receipts.v1",
+  "evidenceThrough": "2026-08-03T13:07:52.796Z",
+  "source": "sanitized projection of schema-validated local evidence",
+  "authority": "KeeperHub audit status, chain explorer, and independent RPC post-state",
+  "receipts": [
+    {
+      "runId": "4f60a628-586e-45b5-8e4f-63cf7f02b954",
+      "evidenceMode": "live",
+      "status": "confirmed",
+      "chainId": 11155111,
+      "network": "sepolia",
+      "action": {
+        "contract": "0x7e66bb0ed4fc562b6990ae44aa532a43d702dd39",
+        "functionName": "pause",
+        "valueWei": "0",
+        "args": []
+      },
+      "simulation": {
+        "status": "ok",
+        "wouldRevert": false,
+        "gasEstimate": "46944"
+      },
+      "submissionAttempts": 1,
+      "retryReasons": [],
+      "txHash": "0xbcad80956a720cba16077992426b1aaa3abd915e5830c9893c3b50e65011bcea",
+      "keeperhubExecutionId": "psamqlx3v0g4xe8yvm8o7",
+      "keeperhubAuditReference": "https://app.keeperhub.com/api/execute/psamqlx3v0g4xe8yvm8o7/status",
+      "explorerUrl": "https://sepolia.etherscan.io/tx/0xbcad80956a720cba16077992426b1aaa3abd915e5830c9893c3b50e65011bcea",
+      "confirmedAt": "2026-08-03T13:06:14.974Z",
+      "postStateVerification": {
+        "ok": true,
+        "summary": "Post-state verified for pause",
+        "paused": true,
+        "blockNumber": "11410546"
+      },
+      "receiptSha256": "5fd1b3c036690b367ee5d3289eccee49872c2c3ddcab5ab49636b758889ad0ec"
+    },
+    {
+      "runId": "aad42e4f-f6df-47d4-89c6-b98576adb6f2",
+      "evidenceMode": "live",
+      "status": "confirmed",
+      "chainId": 11155111,
+      "network": "sepolia",
+      "action": {
+        "contract": "0x7e66bb0ed4fc562b6990ae44aa532a43d702dd39",
+        "functionName": "pause",
+        "valueWei": "0",
+        "args": []
+      },
+      "simulation": {
+        "status": "ok",
+        "wouldRevert": false,
+        "gasEstimate": "28040"
+      },
+      "submissionAttempts": 1,
+      "retryReasons": [],
+      "txHash": "0x8c874b5ccc852fccd40870c36788cc1d9d86b90461bb4ff134dbd99bcf3d98dc",
+      "keeperhubExecutionId": "r8nzgxh9id8wp829xjtz4",
+      "keeperhubAuditReference": "https://app.keeperhub.com/api/execute/r8nzgxh9id8wp829xjtz4/status",
+      "explorerUrl": "https://sepolia.etherscan.io/tx/0x8c874b5ccc852fccd40870c36788cc1d9d86b90461bb4ff134dbd99bcf3d98dc",
+      "confirmedAt": "2026-08-03T13:07:52.796Z",
+      "postStateVerification": {
+        "ok": true,
+        "summary": "Post-state verified for pause",
+        "paused": true,
+        "blockNumber": "11410554"
+      },
+      "receiptSha256": "8d5af0c637ba182f1acbf171dbe8944b4b17aef4da391c4ac9f1b73f52db986e"
+    }
+  ]
+}

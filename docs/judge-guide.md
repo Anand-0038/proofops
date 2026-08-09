@@ -57,7 +57,7 @@ ProofOps uses KeeperHub for the behaviors that are hardest to build safely:
 - idempotent submission;
 - hint-aware terminal reconciliation;
 - execution/audit references;
-- proof-manifest attestation through `ActionLog`.
+- a KeeperHub-only proof-manifest attestation path through `ActionLog` (anchor pending).
 
 The independent RPC/Blockscout layer never writes. Removing KeeperHub leaves
 only an alerting system.
@@ -71,6 +71,7 @@ corepack pnpm run test:contracts
 corepack pnpm run test:browser
 corepack pnpm run export:proof
 corepack pnpm run verify:proof
+corepack pnpm run verify:public-evidence
 corepack pnpm run audit:verify
 corepack pnpm run release:gate -- --local
 docker build -t proofops:local .
@@ -80,7 +81,7 @@ Expected local evidence:
 
 | Gate | Expected |
 | --- | ---: |
-| Vitest | 109 pass, 1 live test skipped without credentials |
+| Vitest | 116 pass, 2 live tests skipped without credentials |
 | Foundry | 11 pass |
 | Browser | 1440, 390, and 320 pixel journeys pass |
 | Screenshots | 6 |
@@ -89,9 +90,9 @@ Expected local evidence:
 | Local readiness | complete |
 | Submission readiness | waiting for external gates |
 
-The local totals are release evidence. The current workspace also includes two
-verified live KeeperHub executions on Sepolia; submission readiness still waits
-on public URLs and the durable ActionLog proof anchor.
+The local totals are release evidence. The public receipt ledger includes two
+verified KeeperHub executions on Sepolia; submission readiness still waits on
+the hosted dashboard, video URL, and durable ActionLog proof anchor.
 
 ## Screenshot trail
 
@@ -106,10 +107,10 @@ on public URLs and the durable ActionLog proof anchor.
 
 ## Honest boundary
 
-This local checkout has two verified live KeeperHub executions and exposes only
-their schema-validated explorer/audit links. The dashboard does not present a
-submission-ready claim. The strict gate still waits for a durable proof URI and
-public repository, dashboard, and video URLs.
+This repository exposes two sanitized, schema-validated live KeeperHub receipts
+with explorer, audit, and post-state evidence. The dashboard does not present a
+submission-ready claim. The strict gate still waits for a durable proof URI,
+public dashboard, and video URL.
 
 That gate is a feature: the project cannot accidentally ship a fixture as
 submission evidence.

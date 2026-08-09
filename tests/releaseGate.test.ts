@@ -16,6 +16,7 @@ function localReadyFacts(): ReleaseFacts {
     contractTestsPassed: true,
     browserTestsPassed: true,
     proofVerified: true,
+    publicEvidencePassed: true,
     dependencyAuditPassed: true,
     secretFindings: [],
     localSigningFindings: [],

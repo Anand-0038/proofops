@@ -17,6 +17,15 @@ describe.skipIf(!live)("live-smoke KeeperHub", () => {
     const rest = await client.pingRest();
     expect(rest.ok).toBe(true);
   }, 30_000);
+
+  it("initializes the official MCP server and discovers tools", async () => {
+    const client = new KeeperHubClient();
+    const mcp = await client.discoverMcpTools();
+    expect(mcp.tools.length).toBeGreaterThan(0);
+    expect(mcp.tools.map((tool) => tool.name)).toEqual(
+      expect.arrayContaining(["search_workflows", "call_workflow"]),
+    );
+  }, 30_000);
 });
 
 describe("live-smoke placeholder", () => {

@@ -41,6 +41,7 @@ const requiredFiles = [
   "contracts/script/DeployActionLog.s.sol",
   "docs/architecture.md",
   "docs/api.md",
+  "docs/evidence/verified-live-receipts.json",
   "docs/judge-guide.md",
   "docs/live-runbook.md",
   "docs/release-checklist.md",
@@ -134,6 +135,7 @@ let unit = { ok: true, detail: "skipped in submission-only mode" };
 let contracts = { ok: true, detail: "skipped in submission-only mode" };
 let browser = { ok: true, detail: "skipped in submission-only mode" };
 let proof = { ok: true, detail: "skipped in submission-only mode" };
+let publicEvidence = { ok: true, detail: "skipped in submission-only mode" };
 let dependencyAudit = {
   ok: true,
   detail: "skipped in submission-only mode",
@@ -158,6 +160,8 @@ if (runLocalChecks) {
   commandDetails.browser = browser.detail;
   proof = run("corepack", ["pnpm", "run", "verify:proof"]);
   commandDetails.proof = proof.detail;
+  publicEvidence = run("corepack", ["pnpm", "run", "verify:public-evidence"]);
+  commandDetails.publicEvidence = publicEvidence.detail;
   dependencyAudit = run("corepack", ["pnpm", "run", "audit:verify"]);
   commandDetails.dependencyAudit = dependencyAudit.detail;
 
@@ -181,6 +185,7 @@ const facts: ReleaseFacts = {
   contractTestsPassed: contracts.ok,
   browserTestsPassed: browser.ok,
   proofVerified: proof.ok,
+  publicEvidencePassed: publicEvidence.ok,
   dependencyAuditPassed: dependencyAudit.ok,
   secretFindings: docProblems.secrets,
   localSigningFindings: docProblems.localSigning,
