@@ -3,14 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "packageManager": "pnpm@10.28.1",
-  "description": "Bounded incident-response keeper agent: detect drift → policy → KeeperHub simulate/execute → proof bundle",
+  "description": "Bounded incident-response keeper agent: detect drift \u2192 policy \u2192 KeeperHub simulate/execute \u2192 proof bundle",
   "type": "module",
   "engines": {
     "node": ">=20 <23"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "start": "node dist/scripts/demo-server.js",
+    "build": "node api.js && tsc -p tsconfig.json",
+    "start": "node api.js && node dist/scripts/demo-server.js",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run",
     "test:browser": "bash tests/browser/run.sh",
