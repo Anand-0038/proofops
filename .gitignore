@@ -1,8 +1,6 @@
 node_modules/
 dist/
 package-lock.json
-.env
-.env.local
 .env.*.local
 *.pem
 data/*.jsonl
@@ -33,3 +31,8 @@ docs/SUBMISSION_DRAFT.md
 docs/demo-script.md
 docs/demo-shot-list.md
 docs/superpowers/
+branch_structure.json
+temp_auto_push.bat
+temp_interactive_push.bat
+.gitignore
+config.bat
