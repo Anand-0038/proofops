@@ -95,7 +95,7 @@ function applyTheme(theme, { persist = false } = {}) {
 
   const metaThemeColor = document.querySelector('meta[name="theme-color"]');
   if (metaThemeColor) {
-    metaThemeColor.content = theme === "light" ? "#f5f7fb" : "#07131c";
+    metaThemeColor.content = theme === "light" ? "#f5f7fb" : "#090c11";
   }
 
   const toggle = $("#theme-toggle");
@@ -969,7 +969,7 @@ async function loadConsole({
         )
       : null;
     state.selectedRecord =
-      retained ?? state.evidence[state.evidence.length - 1] ?? null;
+      retained ?? journeyEvidence("live") ?? state.evidence[state.evidence.length - 1] ?? null;
 
     renderReadiness();
     renderJourneyControls();

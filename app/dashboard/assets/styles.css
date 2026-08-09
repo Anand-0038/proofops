@@ -1,38 +1,38 @@
 :root {
   color-scheme: dark;
-  --abyss: #07131c;
-  --blueprint: #0b2b3a;
-  --blueprint-light: #124154;
-  --copper: #c86f3d;
-  --copper-bright: #ee9360;
-  --telemetry: #78dce8;
-  --bone: #e7e2d6;
-  --paper: #c9c7be;
-  --graphite: #82949c;
-  --line: rgba(130, 148, 156, 0.24);
-  --line-strong: rgba(120, 220, 232, 0.34);
-  --danger: #ff7b6f;
-  --warning: #e7bb68;
-  --success: #78dce8;
-  --muted-subtle: #65767e;
-  --mesh-line: rgba(120, 220, 232, 0.027);
-  --mesh-core: rgba(11, 43, 58, 0.88);
-  --surface-solid: rgba(11, 43, 58, 0.32);
-  --surface-soft: rgba(11, 43, 58, 0.25);
-  --surface-medium: rgba(11, 43, 58, 0.5);
-  --surface-strong: rgba(11, 43, 58, 0.8);
-  --surface-muted: rgba(7, 19, 28, 0.94);
-  --surface-muted-soft: rgba(7, 19, 28, 0.72);
-  --surface-muted-mid: rgba(7, 19, 28, 0.86);
-  --surface-muted-strong: rgba(7, 19, 28, 0.96);
-  --surface-backdrop: rgba(5, 16, 23, 0.75);
-  --panel-head: rgba(11, 43, 58, 0.38);
-  --telemetry-radiance: rgba(120, 220, 232, 0.22);
-  --telemetry-glow: rgba(120, 220, 232, 0.55);
-  --telemetry-soft: rgba(120, 220, 232, 0.045);
-  --telemetry-border: rgba(120, 220, 232, 0.09);
-  --telemetry-sheen: rgba(120, 220, 232, 0.24);
-  --rail-line: rgba(120, 220, 232, 0.18);
+  --abyss: #090c11;
+  --blueprint: #111821;
+  --blueprint-light: #18222e;
+  --copper: #e5773d;
+  --copper-bright: #ff9f66;
+  --telemetry: #67d4f0;
+  --bone: #f3f7fb;
+  --paper: #c8d2dc;
+  --graphite: #9aaaba;
+  --line: rgba(166, 183, 199, 0.25);
+  --line-strong: rgba(103, 212, 240, 0.48);
+  --danger: #ff8178;
+  --warning: #f0c36b;
+  --success: #67d4f0;
+  --muted-subtle: #8393a3;
+  --mesh-line: rgba(137, 159, 180, 0.035);
+  --mesh-core: rgba(39, 54, 70, 0.54);
+  --surface-solid: rgba(30, 39, 50, 0.72);
+  --surface-soft: rgba(27, 36, 47, 0.58);
+  --surface-medium: rgba(35, 47, 60, 0.72);
+  --surface-strong: rgba(40, 53, 67, 0.82);
+  --surface-muted: rgba(16, 22, 29, 0.96);
+  --surface-muted-soft: rgba(18, 25, 33, 0.88);
+  --surface-muted-mid: rgba(20, 28, 37, 0.94);
+  --surface-muted-strong: rgba(12, 17, 23, 0.98);
+  --surface-backdrop: rgba(12, 17, 23, 0.9);
+  --panel-head: rgba(34, 46, 59, 0.72);
+  --telemetry-radiance: rgba(103, 212, 240, 0.24);
+  --telemetry-glow: rgba(103, 212, 240, 0.5);
+  --telemetry-soft: rgba(103, 212, 240, 0.075);
+  --telemetry-border: rgba(103, 212, 240, 0.17);
+  --telemetry-sheen: rgba(103, 212, 240, 0.34);
+  --rail-line: rgba(103, 212, 240, 0.24);
   --display: "Arial Narrow", "Aptos Display", "Franklin Gothic Medium",
     sans-serif;
   --body: "Aptos", "Segoe UI", system-ui, sans-serif;
@@ -105,7 +105,7 @@ body {
     var(--abyss);
   background-size: 32px 32px, 32px 32px, auto, auto;
   font-family: var(--body);
-  line-height: 1.5;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -201,7 +201,7 @@ footer {
   gap: 0.65rem;
   color: var(--graphite);
   font-family: var(--mono);
-  font-size: 0.66rem;
+  font-size: 0.72rem;
   letter-spacing: 0.11em;
 }
 
@@ -269,7 +269,7 @@ main {
   margin: 0;
   color: var(--copper-bright);
   font-family: var(--mono);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -320,7 +320,7 @@ h3 {
 
 .readiness {
   display: grid;
-  grid-template-columns: 1.35fr repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1.25fr repeat(3, minmax(0, 1fr));
   gap: 0.65rem;
   margin-block: 1.5rem 1rem;
 }
@@ -357,7 +357,7 @@ h3 {
   margin-top: 0.28rem;
   color: var(--graphite);
   font-family: var(--mono);
-  font-size: 0.58rem;
+  font-size: 0.68rem;
   letter-spacing: 0.05em;
   line-height: 1.25;
   text-transform: uppercase;
@@ -370,14 +370,14 @@ h3 {
 
 .readiness-item strong {
   font-family: var(--mono);
-  font-size: 0.7rem;
+  font-size: 0.76rem;
   letter-spacing: 0.08em;
 }
 
 .readiness-item small {
   margin-top: 0.22rem;
   color: var(--graphite);
-  font-size: 0.72rem;
+  font-size: 0.78rem;
 }
 
 .readiness-led {
@@ -421,7 +421,7 @@ h3 {
 .field small,
 .action-note {
   color: var(--graphite);
-  font-size: 0.74rem;
+  font-size: 0.82rem;
 }
 
 .input-row {
@@ -440,7 +440,7 @@ select {
   color: var(--bone);
   background: var(--abyss);
   font-family: var(--mono);
-  font-size: 0.78rem;
+  font-size: 0.84rem;
 }
 
 #operator-token {
@@ -522,7 +522,7 @@ input::placeholder {
   margin-top: 0.65rem;
   color: var(--graphite);
   font-family: var(--mono);
-  font-size: 0.62rem;
+  font-size: 0.7rem;
   letter-spacing: 0.08em;
 }
 
@@ -583,13 +583,13 @@ input::placeholder {
 
 .route-step strong {
   color: var(--bone);
-  font-size: 0.82rem;
+  font-size: 0.9rem;
 }
 
 .route-step small {
   margin-top: 0.24rem;
   color: var(--graphite);
-  font-size: 0.66rem;
+  font-size: 0.76rem;
   line-height: 1.35;
 }
 
@@ -597,7 +597,7 @@ input::placeholder {
   align-self: start;
   color: var(--copper-bright);
   font-family: var(--mono);
-  font-size: 0.58rem;
+  font-size: 0.68rem;
   font-weight: 700;
 }
 
@@ -621,7 +621,7 @@ input::placeholder {
   justify-items: end;
   color: var(--graphite);
   font-family: var(--mono);
-  font-size: 0.65rem;
+  font-size: 0.72rem;
   letter-spacing: 0.08em;
 }
 
@@ -707,7 +707,7 @@ input::placeholder {
   color: var(--graphite);
   background: transparent;
   font-family: var(--mono);
-  font-size: 0.63rem;
+  font-size: 0.72rem;
   letter-spacing: 0.09em;
   cursor: pointer;
 }
@@ -748,7 +748,7 @@ input::placeholder {
 .stage-index {
   justify-self: start;
   color: var(--graphite);
-  font-size: 0.58rem;
+  font-size: 0.66rem;
 }
 
 .stage-detail {
@@ -783,7 +783,7 @@ input::placeholder {
   margin-bottom: 0.22rem;
   color: var(--graphite);
   font-family: var(--mono);
-  font-size: 0.6rem;
+  font-size: 0.68rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -794,7 +794,7 @@ input::placeholder {
   overflow-wrap: anywhere;
   color: var(--bone);
   font-family: var(--mono);
-  font-size: 0.72rem;
+  font-size: 0.8rem;
 }
 
 .workspace {
@@ -870,7 +870,7 @@ button.incident-card {
   gap: 0.5rem;
   color: var(--graphite);
   font-family: var(--mono);
-  font-size: 0.58rem;
+  font-size: 0.67rem;
   letter-spacing: 0.07em;
   text-transform: uppercase;
 }
@@ -879,7 +879,7 @@ button.incident-card {
 .approval-card strong {
   display: block;
   margin-block: 0.45rem 0.22rem;
-  font-size: 0.88rem;
+  font-size: 0.98rem;
 }
 
 .incident-card p,
@@ -887,7 +887,7 @@ button.incident-card {
 .panel-copy {
   margin: 0;
   color: var(--graphite);
-  font-size: 0.76rem;
+  font-size: 0.86rem;
 }
 
 .severity {
@@ -907,7 +907,7 @@ button.incident-card {
   border: 1px solid currentColor;
   border-radius: 999px;
   font-family: var(--mono);
-  font-size: 0.57rem;
+  font-size: 0.64rem;
   font-weight: 800;
   letter-spacing: 0.08em;
 }
@@ -936,7 +936,7 @@ button.incident-card {
   border-left: 2px solid var(--warning);
   color: var(--graphite);
   background: rgba(231, 187, 104, 0.055);
-  font-size: 0.74rem;
+  font-size: 0.84rem;
 }
 
 .truth-callout strong {
@@ -980,7 +980,7 @@ button.incident-card {
 .instrument-label-row span {
   color: var(--graphite);
   font-family: var(--mono);
-  font-size: 0.63rem;
+  font-size: 0.72rem;
 }
 
 .attempt-list {
@@ -999,7 +999,7 @@ button.incident-card {
   min-height: 45px;
   padding-left: 1.25rem;
   color: var(--paper);
-  font-size: 0.75rem;
+  font-size: 0.82rem;
 }
 
 .attempt-list li::before {
@@ -1030,7 +1030,7 @@ button.incident-card {
 .attempt-list time {
   color: var(--graphite);
   font-family: var(--mono);
-  font-size: 0.62rem;
+  font-size: 0.7rem;
 }
 
 .proof-receipt {
@@ -1048,7 +1048,7 @@ button.incident-card {
 .proof-receipt p {
   margin: 0.45rem 0 0;
   color: var(--graphite);
-  font-size: 0.8rem;
+  font-size: 0.86rem;
 }
 
 .download-actions {
@@ -1067,7 +1067,7 @@ button.incident-card {
   border: 1px solid var(--line-strong);
   border-radius: 2px;
   font-family: var(--mono);
-  font-size: 0.64rem;
+  font-size: 0.72rem;
   text-decoration: none;
 }
 
@@ -1088,7 +1088,7 @@ button.incident-card {
   padding: 0.9rem 1rem;
   color: var(--graphite);
   font-family: var(--mono);
-  font-size: 0.68rem;
+  font-size: 0.76rem;
   cursor: pointer;
 }
 
@@ -1101,7 +1101,7 @@ button.incident-card {
   color: var(--paper);
   background: var(--blueprint);
   font-family: var(--mono);
-  font-size: 0.68rem;
+  font-size: 0.76rem;
   line-height: 1.65;
   white-space: pre-wrap;
 }
@@ -1116,7 +1116,7 @@ button.incident-card {
   padding: 1rem;
   border: 1px dashed var(--line);
   color: var(--graphite);
-  font-size: 0.78rem;
+  font-size: 0.86rem;
 }
 
 .evidence-index {
@@ -1148,7 +1148,7 @@ button.incident-card {
 .filter-field label {
   color: var(--graphite);
   font-family: var(--mono);
-  font-size: 0.6rem;
+  font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -1178,7 +1178,7 @@ button.incident-card {
   margin: 0;
   color: var(--graphite);
   font-family: var(--mono);
-  font-size: 0.66rem;
+  font-size: 0.74rem;
 }
 
 .text-button {
@@ -1187,7 +1187,7 @@ button.incident-card {
   color: var(--telemetry);
   background: transparent;
   font-family: var(--mono);
-  font-size: 0.66rem;
+  font-size: 0.74rem;
   cursor: pointer;
 }
 
@@ -1224,14 +1224,14 @@ th {
   color: var(--graphite);
   background: var(--panel-head);
   font-family: var(--mono);
-  font-size: 0.61rem;
+  font-size: 0.68rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 td {
   color: var(--paper);
-  font-size: 0.76rem;
+  font-size: 0.84rem;
 }
 
 tbody tr:last-child td {
@@ -1257,7 +1257,7 @@ tbody button {
   color: var(--telemetry);
   background: transparent;
   font-family: var(--mono);
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   cursor: pointer;
 }
 
@@ -1273,7 +1273,7 @@ tbody button {
 
 .status-cell {
   font-family: var(--mono);
-  font-size: 0.68rem;
+  font-size: 0.76rem;
 }
 
 .status-cell[data-tone="good"] {
@@ -1306,7 +1306,7 @@ tbody button {
   color: var(--paper);
   background: var(--surface-muted-strong);
   box-shadow: var(--shadow);
-  font-size: 0.8rem;
+  font-size: 0.86rem;
   pointer-events: auto;
 }
 
@@ -1344,7 +1344,7 @@ footer {
   padding-block: 1.5rem 2rem;
   color: var(--muted-subtle);
   font-family: var(--mono);
-  font-size: 0.6rem;
+  font-size: 0.68rem;
   letter-spacing: 0.07em;
 }
 
@@ -1369,6 +1369,10 @@ footer {
 
   h1 {
     font-size: clamp(3rem, 7.4vw, 5.4rem);
+  }
+
+  .readiness {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .workspace {
@@ -1423,7 +1427,7 @@ footer {
 
   .masthead-actions .quiet-button {
     padding-inline: 0.55rem;
-    font-size: 0.64rem;
+    font-size: 0.72rem;
     white-space: nowrap;
   }
 
