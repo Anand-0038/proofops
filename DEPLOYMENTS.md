@@ -16,7 +16,7 @@ release gates; no fixture address or link is substituted.
 | KeeperHub mitigation receipt | Sepolia | [`0xbcad80956a720cba16077992426b1aaa3abd915e5830c9893c3b50e65011bcea`](https://sepolia.etherscan.io/tx/0xbcad80956a720cba16077992426b1aaa3abd915e5830c9893c3b50e65011bcea) | confirmed via KeeperHub |
 | Public evidence anchor | Sepolia | [`0x9fae87849620150fa8073daef43e1cb435aec68545a432d5f0e588fe6bcd5fa4`](https://sepolia.etherscan.io/tx/0x9fae87849620150fa8073daef43e1cb435aec68545a432d5f0e588fe6bcd5fa4) | ActionLog index 0; confirmed via KeeperHub |
 | Public repository | public HTTPS | [`github.com/Anand-0038/proofops`](https://github.com/Anand-0038/proofops) | verified public |
-| Public dashboard | public HTTPS | no verified URL recorded | external gate |
+| Public dashboard | Render / Singapore | [`proofops-cfp4.onrender.com`](https://proofops-cfp4.onrender.com) | commit `e32628c`; browser and API verified |
 | Demo video | public video host | no verified URL recorded | external gate |
 
 ## Local deployment
@@ -103,7 +103,8 @@ simulation, execution, reconciliation, verification, and export sequence.
 - [x] ActionLog address is independently visible on the Sepolia explorer
 - [x] A confirmed KeeperHub mitigation receipt passes strict validation
 - [x] The public evidence ledger digest is anchored through KeeperHub
-- [ ] Public dashboard and video URLs are configured
+- [x] Public dashboard URL is configured and independently exercised
+- [ ] Demo video URL is configured
 - [ ] `corepack pnpm run release:gate` reports `Submission: COMPLETE`
 
 Update this record only from terminal receipts and public pages. Never paste a

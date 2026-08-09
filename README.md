@@ -10,15 +10,19 @@ proof bundle.
 > Every mitigation should survive an investigation.
 
 [![CI](https://img.shields.io/badge/CI-release%20gated-48c8e8)](.github/workflows/ci.yml)
-[![Tests](https://img.shields.io/badge/tests-117%20passed-66d19e)](docs/release-checklist.md)
+[![Tests](https://img.shields.io/badge/tests-120%20passed-66d19e)](docs/release-checklist.md)
 [![Contracts](https://img.shields.io/badge/Foundry-11%20passed-cd8b5b)](contracts/test)
 [![License](https://img.shields.io/badge/license-MIT-e8edf2)](LICENSE)
 
-![ProofOps incident console](docs/assets/screenshots/proofops-incident-console.png)
+[Open the verified public console](https://proofops-cfp4.onrender.com) ·
+[Inspect the public receipt ledger](docs/evidence/verified-live-receipts.json)
+
+![ProofOps public incident console](docs/assets/screenshots/proofops-public-console.png)
 
 ## The 90-second judge path
 
-1. Open the [judge guide](docs/judge-guide.md) and start the local console.
+1. Open the [public console](https://proofops-cfp4.onrender.com) or follow the
+   [judge guide](docs/judge-guide.md) for the authenticated local path.
 2. Inspect the eight-stage execution rail: **observe → drift → policy → approve
    → simulate → execute → reconcile → verify**.
 3. Select the simulation-blocked receipt. It proves an unsafe call stopped
@@ -85,8 +89,8 @@ trail; what remains is only a detector. See the
 | `MIXED` | fixture observation with genuine execution metadata | only after strict receipt validation |
 | `LIVE` | independent observation and KeeperHub execution | yes, with a complete bound receipt |
 
-Current repository evidence is **144 valid runs, 8 quarantined legacy rows, and
-2 verified live KeeperHub executions**. The primary live receipt is independently
+Current repository evidence includes **2 verified live KeeperHub executions**;
+malformed legacy rows remain quarantined and excluded. The primary live receipt is independently
 bound to a Sepolia transaction, KeeperHub audit reference, and verified
 post-state. Inspect the sanitized, digest-bound
 [public receipt ledger](docs/evidence/verified-live-receipts.json) or the
@@ -186,10 +190,11 @@ transaction and public submission URLs.
   model packaged
 - [x] Record and validate real KeeperHub transactions, including independent post-state
 - [x] Publish the repository at [`Anand-0038/proofops`](https://github.com/Anand-0038/proofops)
-- [ ] Publish the hosted console and under-three-minute video
+- [x] Publish and verify the hosted console
+- [ ] Publish the under-three-minute video
 - [ ] Run the strict release gate with those public URLs
 
-The remaining rows require work on the hosted console and video. Fixture evidence cannot satisfy
+The remaining row requires the public video. Fixture evidence cannot satisfy
 the live receipt gate. The exact handoff is in
 [DEPLOYMENTS.md](DEPLOYMENTS.md) and the
 [release checklist](docs/release-checklist.md).

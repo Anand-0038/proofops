@@ -46,9 +46,9 @@ docker build -t proofops:local .
 - [x] Anchor the public evidence ledger through `ActionLog.recordAction` via KeeperHub
 - [x] Publish the GitHub repository and set `PUBLIC_REPOSITORY_URL`
 - [ ] Publish the under-three-minute demo and set `DEMO_VIDEO_URL`
-- [ ] Publish the dashboard and set `PUBLIC_DEMO_URL`
+- [x] Publish and verify the dashboard: https://proofops-cfp4.onrender.com
 - [ ] Run strict `corepack pnpm run release:gate`
 
 The retry/reconciliation row still needs a genuine live failure observation;
-the remaining dashboard and video rows require external handoff.
+the remaining video row requires external handoff.
 Fixture data must never be used to check them.
