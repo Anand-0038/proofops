@@ -98,6 +98,7 @@ MCP discovery, and receipt-validation paths are covered locally. A real organiza
 credential is configured only in the ignored local environment. Two terminal
 KeeperHub executions are verified on Sepolia, including the primary mitigation
 receipt and its independent `paused == true` post-state. The corrected unsafe
-call is also recorded as a live zero-submission simulation block. The remaining
-live handoff is durable ActionLog proof hosting and public submission metadata;
-follow the [live runbook](live-runbook.md) for that boundary.
+call is also recorded as a live zero-submission simulation block. The public
+evidence ledger is durably bound at `ActionLog` index 0 by KeeperHub execution
+`bqv6xx4qc81498hhyzjwr`. The remaining live handoff is the public dashboard and
+demo video; follow the [live runbook](live-runbook.md) for future attestations.

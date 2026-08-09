@@ -42,6 +42,7 @@ const requiredFiles = [
   "docs/architecture.md",
   "docs/api.md",
   "docs/evidence/verified-live-receipts.json",
+  "docs/evidence/action-log-anchor.json",
   "docs/judge-guide.md",
   "docs/live-runbook.md",
   "docs/release-checklist.md",

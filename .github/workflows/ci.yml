@@ -57,6 +57,7 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
+          cache-dependency-path: requirements-browser.txt
       - run: corepack enable
       - run: corepack pnpm install --frozen-lockfile
       - run: python -m pip install -r requirements-browser.txt
@@ -102,6 +103,7 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
+          cache-dependency-path: requirements-browser.txt
       - uses: foundry-rs/foundry-toolchain@v1
       - run: corepack enable
       - run: corepack pnpm install --frozen-lockfile

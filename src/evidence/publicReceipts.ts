@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
 import { z } from "zod";
+import { keccak256, stringToHex } from "viem";
 import {
   isVerifiedLiveExecution,
   type EvidenceRecord,
@@ -65,6 +66,28 @@ export const PublicReceiptLedgerSchema = z
   .strict();
 
 export type PublicReceiptLedger = z.infer<typeof PublicReceiptLedgerSchema>;
+
+export const ActionLogAnchorSchema = z
+  .object({
+    schemaVersion: z.literal("proofops.action-log-anchor.v1"),
+    chainId: z.number().int().positive(),
+    actionLogAddress: z.string().regex(/^0x[a-fA-F0-9]{40}$/),
+    actionIndex: z.number().int().nonnegative(),
+    incident: z.string().min(1),
+    incidentId: z.string().regex(/^0x[a-fA-F0-9]{64}$/),
+    artifactSha256: z.string().regex(/^0x[a-fA-F0-9]{64}$/),
+    artifactUri: z.string().url().startsWith("https://"),
+    actor: z.string().regex(/^0x[a-fA-F0-9]{40}$/),
+    recordedAtUnix: z.number().int().positive(),
+    blockNumber: z.string().regex(/^\d+$/),
+    keeperhubExecutionId: z.string().min(6),
+    keeperhubAuditReference: z.string().url().startsWith("https://"),
+    txHash: z.string().regex(/^0x[a-fA-F0-9]{64}$/),
+    explorerUrl: z.string().url().startsWith("https://"),
+  })
+  .strict();
+
+export type ActionLogAnchor = z.infer<typeof ActionLogAnchorSchema>;
 
 function sha256Json(value: unknown): string {
   return createHash("sha256").update(JSON.stringify(value)).digest("hex");
@@ -206,4 +229,38 @@ export function verifyPublicReceiptLedger(value: unknown): {
     receiptCount: parsed.data.receipts.length,
     issues,
   };
+}
+
+export function verifyActionLogAnchor(input: {
+  ledgerBytes: Uint8Array;
+  anchor: unknown;
+}): { ok: boolean; issues: string[] } {
+  const parsed = ActionLogAnchorSchema.safeParse(input.anchor);
+  if (!parsed.success) {
+    return {
+      ok: false,
+      issues: parsed.error.issues.map((issue) => issue.message),
+    };
+  }
+  const anchor = parsed.data;
+  const issues: string[] = [];
+  const artifactSha256 = `0x${createHash("sha256")
+    .update(input.ledgerBytes)
+    .digest("hex")}`;
+  if (artifactSha256.toLowerCase() !== anchor.artifactSha256.toLowerCase()) {
+    issues.push("ActionLog artifact digest does not match the public ledger");
+  }
+  if (
+    keccak256(stringToHex(anchor.incident)).toLowerCase() !==
+    anchor.incidentId.toLowerCase()
+  ) {
+    issues.push("ActionLog incident ID does not match the incident label");
+  }
+  if (!anchor.keeperhubAuditReference.includes(anchor.keeperhubExecutionId)) {
+    issues.push("ActionLog audit URL does not bind the KeeperHub execution");
+  }
+  if (!anchor.explorerUrl.toLowerCase().includes(anchor.txHash.toLowerCase())) {
+    issues.push("ActionLog explorer URL does not bind the transaction");
+  }
+  return { ok: issues.length === 0, issues };
 }

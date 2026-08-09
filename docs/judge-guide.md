@@ -57,7 +57,7 @@ ProofOps uses KeeperHub for the behaviors that are hardest to build safely:
 - idempotent submission;
 - hint-aware terminal reconciliation;
 - execution/audit references;
-- a KeeperHub-only proof-manifest attestation path through `ActionLog` (anchor pending).
+- a live KeeperHub-only public-evidence attestation through `ActionLog`.
 
 The independent RPC/Blockscout layer never writes. Removing KeeperHub leaves
 only an alerting system.
@@ -81,7 +81,7 @@ Expected local evidence:
 
 | Gate | Expected |
 | --- | ---: |
-| Vitest | 116 pass, 2 live tests skipped without credentials |
+| Vitest | 117 pass, 2 live tests skipped without credentials |
 | Foundry | 11 pass |
 | Browser | 1440, 390, and 320 pixel journeys pass |
 | Screenshots | 6 |
@@ -92,7 +92,7 @@ Expected local evidence:
 
 The local totals are release evidence. The public receipt ledger includes two
 verified KeeperHub executions on Sepolia; submission readiness still waits on
-the hosted dashboard, video URL, and durable ActionLog proof anchor.
+the hosted dashboard and video URL.
 
 ## Screenshot trail
 
@@ -109,8 +109,8 @@ the hosted dashboard, video URL, and durable ActionLog proof anchor.
 
 This repository exposes two sanitized, schema-validated live KeeperHub receipts
 with explorer, audit, and post-state evidence. The dashboard does not present a
-submission-ready claim. The strict gate still waits for a durable proof URI,
-public dashboard, and video URL.
+submission-ready claim. The strict gate still waits for a public dashboard and
+video URL.
 
 That gate is a feature: the project cannot accidentally ship a fixture as
 submission evidence.

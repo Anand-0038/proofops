@@ -10,7 +10,7 @@ proof bundle.
 > Every mitigation should survive an investigation.
 
 [![CI](https://img.shields.io/badge/CI-release%20gated-48c8e8)](.github/workflows/ci.yml)
-[![Tests](https://img.shields.io/badge/tests-116%20passed-66d19e)](docs/release-checklist.md)
+[![Tests](https://img.shields.io/badge/tests-117%20passed-66d19e)](docs/release-checklist.md)
 [![Contracts](https://img.shields.io/badge/Foundry-11%20passed-cd8b5b)](contracts/test)
 [![License](https://img.shields.io/badge/license-MIT-e8edf2)](LICENSE)
 
@@ -133,13 +133,15 @@ corepack pnpm run verify:proof
 ```
 
 `data/proof-bundle/manifest.json` binds the machine-readable bundle, human
-report, verification result, and archival HTML. An optional `ActionLog`
-attestation records the manifest digest through KeeperHub; it never uses a
-local key.
+report, verification result, and archival HTML. The sanitized public receipt
+ledger is anchored at `ActionLog` index 0 through KeeperHub execution
+[`bqv6xx4qc81498hhyzjwr`](https://app.keeperhub.com/api/execute/bqv6xx4qc81498hhyzjwr/status),
+with [Sepolia transaction proof](https://sepolia.etherscan.io/tx/0x9fae87849620150fa8073daef43e1cb435aec68545a432d5f0e588fe6bcd5fa4).
+No local signer was used.
 
 ## Engineering evidence
 
-- 116 passing Vitest tests and two credential-gated live tests
+- 117 passing Vitest tests and two credential-gated live tests
 - 11 passing Foundry contract tests
 - real Chromium acceptance at 1440×1000, 390×844, and 320×800
 - authentication, origin, body-size, content-type, redaction, and fixture-link
@@ -187,8 +189,7 @@ transaction and public submission URLs.
 - [ ] Publish the hosted console and under-three-minute video
 - [ ] Run the strict release gate with those public URLs
 
-The remaining rows require hosting/video work and a durable public proof
-location for the optional ActionLog anchor. Fixture evidence cannot satisfy
+The remaining rows require work on the hosted console and video. Fixture evidence cannot satisfy
 the live receipt gate. The exact handoff is in
 [DEPLOYMENTS.md](DEPLOYMENTS.md) and the
 [release checklist](docs/release-checklist.md).
